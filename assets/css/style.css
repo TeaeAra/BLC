@@ -1020,17 +1020,7 @@ section {
   background: #fff;
 }
 
-/* 4 columns for team members */
-.team .row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
 .team .member {
-  flex: 1 1 22%;
-  max-width: 22%;
-  min-width: 200px;
   box-sizing: border-box;
 }
 
