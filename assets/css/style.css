@@ -1020,33 +1020,6 @@ section {
   background: #fff;
 }
 
-/* 4 columns for team members */
-.team .row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.team .member {
-  flex: 1 1 22%;
-  max-width: 22%;
-  min-width: 200px;
-  box-sizing: border-box;
-}
-
-/* Responsive: 2 columns on tablets, 1 on mobile */
-@media (max-width: 991px) {
-  .team .member {
-    flex: 1 1 45%;
-    max-width: 45%;
-  }
-}
-@media (max-width: 600px) {
-  .team .member {
-    flex: 1 1 100%;
-    max-width: 100%;
-  }
-  
 }
 .team .member img {
   max-width: 60%;
