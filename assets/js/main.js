@@ -1,11 +1,3 @@
-/**
-* Template Name: Lumia
-* Template URL: https://bootstrapmade.com/lumia-bootstrap-business-template/
-* Updated: Mar 17 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-
 (function() {
   "use strict";
 
@@ -112,18 +104,43 @@
    * Mobile nav toggle
    */
   on('click', '.mobile-nav-toggle', function(e) {
-    select('#navbar').classList.toggle('navbar-mobile')
-    this.classList.toggle('bi-list')
-    this.classList.toggle('bi-x')
-  })
+    e.preventDefault();
+    const navbar = select('#navbar');
+    if (!navbar) return;
+
+    // toggle mobile state on navbar
+    navbar.classList.toggle('navbar-mobile');
+
+    // toggle icons on all mobile toggles (in case there are duplicates)
+    const toggles = select('.mobile-nav-toggle', true);
+    toggles.forEach(t => {
+      t.classList.toggle('bi-list');
+      t.classList.toggle('bi-x');
+    });
+
+    // lock background scroll while menu open
+    document.body.classList.toggle('nav-open');
+  });
 
   /**
    * Mobile nav dropdowns activate
    */
   on('click', '.navbar .dropdown > a', function(e) {
-    if (select('#navbar').classList.contains('navbar-mobile')) {
-      e.preventDefault()
-      this.nextElementSibling.classList.toggle('dropdown-active')
+    const navbar = select('#navbar');
+    if (!navbar) return;
+
+    if (navbar.classList.contains('navbar-mobile')) {
+      e.preventDefault();
+
+      // parent <li class="dropdown">
+      const parent = this.closest('.dropdown');
+      if (!parent) return;
+
+      // submenu <ul>
+      const submenu = parent.querySelector('ul');
+      // toggle both parent and submenu classes so CSS can show/hide
+      parent.classList.toggle('dropdown-active');
+      if (submenu) submenu.classList.toggle('dropdown-active');
     }
   }, true)
 
@@ -258,5 +275,28 @@
    * Initiate Pure Counter 
    */
   new PureCounter();
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const header = document.getElementById('header');
+    const heroSection = document.getElementById('hero');
+    
+    // Get the height of the hero section
+    const heroHeight = heroSection ? heroSection.offsetHeight + 70 : 0; // 70 is header height
+
+    window.addEventListener('scroll', function() {
+      const scrollPosition = window.scrollY;
+      
+      // Hide header when scrolled past hero section
+      if (scrollPosition > heroHeight) {
+        header.style.opacity = '0';
+        header.style.pointerEvents = 'none';
+        header.style.transition = 'opacity 0.3s ease-in-out';
+      } else {
+        header.style.opacity = '1';
+        header.style.pointerEvents = 'auto';
+        header.style.transition = 'opacity 0.3s ease-in-out';
+      }
+    });
+  });
 
 })()
