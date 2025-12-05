@@ -152,11 +152,19 @@
       e.preventDefault()
 
       let navbar = select('#navbar')
-      if (navbar.classList.contains('navbar-mobile')) {
+      if (navbar && navbar.classList.contains('navbar-mobile')) {
+        // close mobile nav
         navbar.classList.remove('navbar-mobile')
-        let navbarToggle = select('.mobile-nav-toggle')
-        navbarToggle.classList.toggle('bi-list')
-        navbarToggle.classList.toggle('bi-x')
+
+        // restore all mobile toggle icons (handle duplicates)
+        const toggles = select('.mobile-nav-toggle', true)
+        toggles.forEach(t => {
+          t.classList.remove('bi-x')
+          t.classList.add('bi-list')
+        })
+
+        // IMPORTANT: remove body lock so scrolling is restored
+        document.body.classList.remove('nav-open')
       }
       scrollto(this.hash)
     }
